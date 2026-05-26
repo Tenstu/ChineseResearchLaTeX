@@ -10,6 +10,7 @@
 
 ### Added（新增）
 
+- 新增 [docs/for-developers/thesis-writing-workflow.md](docs/for-developers/thesis-writing-workflow.md) 与 `skills/thesis-writing-workflow/`：将毕业论文长期写作中的扫描、裁定、回填、验证和交付记录抽象为公开流程与空模板，强调正式 LaTeX 源文件是唯一正文真相源，且不公开真实正文、真实运行记录、具体工具名、模型名或私有信息。
 - 新增 [projects/thesis-ucas-doctor/docs/official/README.md](projects/thesis-ucas-doctor/docs/official/README.md)、[projects/thesis-ucas-doctor/docs/official/SHA256SUMS.txt](projects/thesis-ucas-doctor/docs/official/SHA256SUMS.txt) 与 `projects/thesis-ucas-doctor/docs/official/.gitignore`：将 UCAS 资环官方资料的来源页面、本地文件名约定与完整性校验清单收口到 `docs/official/`，仓库不再直接分发许可待确认的官方 `.doc/.docx` 原件
 - 新增 [projects/thesis-ucas-doctor/docs/ucas_resource_env_alignment_matrix.md](projects/thesis-ucas-doctor/docs/ucas_resource_env_alignment_matrix.md)：固化“资环具体要（.doc）↔ 资环 Word 模板（.docx）↔ UCAS LaTeX 模板”的项目级验收矩阵
 - 新增 [projects/thesis-ucas-doctor/spine.tex](projects/thesis-ucas-doctor/spine.tex)：提供 UCAS 资环书脊独立构建入口（不并入 `main.pdf`）

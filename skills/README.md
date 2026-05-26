@@ -545,6 +545,35 @@ output_mode：preview（先预览）/ apply（确认后写入）
 
 ---
 
+### 18. thesis-writing-workflow - 学位论文写作流程编排
+
+**状态**：🚧 开发中（版本见 `skills/thesis-writing-workflow/config.yaml`）
+
+**类型**：📝 日常
+
+**功能**：将学位论文的扫描、裁定、回填、验证和交付记录组织为可追踪流程；只处理流程编排和门禁，不保存真实论文内容。
+
+**使用场景**：
+- 你需要开始一轮章节审阅、人工意见回流或交付前检查
+- 你希望先记录和裁定候选问题，再小批量回填正式 LaTeX 源文件
+- 你需要在图表变更后检查引用、标签和编号级联
+
+**推荐 Prompt 模板**：
+
+```text
+请使用 thesis-writing-workflow 处理本轮学位论文修改：
+project-dir: <project-dir>
+source-files: <chapter-file>
+review-input: <review-summary>
+run-log: <run-log-file>
+verification-command: <verification-command>
+要求：先扫描和裁定，再小批量回填；每批完成后记录验证结果。
+```
+
+[详细文档 →](thesis-writing-workflow/SKILL.md)
+
+---
+
 ## 技能依赖关系
 
 某些技能依赖其他技能的输出，形成完整的工作流：
@@ -556,6 +585,7 @@ output_mode：preview（先预览）/ apply（确认后写入）
 - **guide-updater**：中间优化，基于综述结果沉淀写作规范（依赖 systematic-literature-review 的输出）
 - **nsfc系列写作skills**：最终撰写标书各模块（可选依赖 guide-updater 优化的指南）
 - **nsfc-budget**：基于完整正文与补充材料生成预算说明书（通常放在正文接近完成后）
+- **thesis-writing-workflow**：学位论文长周期修改的流程编排和交付门禁
 - **nsfc-roadmap / nsfc-schematic**：基于写作内容生成技术路线图与原理图
 - **nsfc-reviewers**：标书完成后模拟专家评审（依赖标书完整正文）
 
