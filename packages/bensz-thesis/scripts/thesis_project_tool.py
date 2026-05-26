@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -14,6 +15,7 @@ from pathlib import Path
 PACKAGE_DIR = Path(__file__).resolve().parents[1]
 FONTS_PACKAGE_DIR = PACKAGE_DIR.parent / "bensz-fonts"
 CACHE_DIRNAME = ".latex-cache"
+BUILD_LOCK_FILENAME = ".bensz-thesis-build.lock"
 PDF_PASSTHROUGH_PATTERN = re.compile(r"^\s*%\s*BENSZ_PASSTHROUGH_PDF:\s*(.+?)\s*$")
 ROOT_ARTIFACT_PATTERNS = (
     "*.aux",
@@ -57,10 +59,95 @@ TOOL_CANDIDATES = {
         "/usr/local/bin/pdftoppm",
     ),
 }
+SUBPROCESS_TEXT_KWARGS = {
+    "text": True,
+    "encoding": "utf-8",
+    "errors": "replace",
+}
 
 
 class BuildError(RuntimeError):
     pass
+
+
+def is_process_running(pid: int) -> bool:
+    if pid <= 0:
+        return False
+    if sys.platform == "win32":
+        result = subprocess.run(
+            ["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"],
+            capture_output=True,
+            check=False,
+            **SUBPROCESS_TEXT_KWARGS,
+        )
+        output = result.stdout.strip()
+        return result.returncode == 0 and str(pid) in output and "No tasks" not in output
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
+
+
+def read_lock_pid(lock_path: Path) -> int | None:
+    try:
+        content = lock_path.read_text(encoding="utf-8")
+        data = json.loads(content)
+        return int(data.get("pid", 0))
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        return None
+
+
+@contextlib.contextmanager
+def project_build_lock(project_dir: Path):
+    lock_path = project_dir / BUILD_LOCK_FILENAME
+    lock_payload = {
+        "pid": os.getpid(),
+        "command": " ".join(sys.argv),
+    }
+    while True:
+        try:
+            fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            existing_pid = read_lock_pid(lock_path)
+            if existing_pid is not None and is_process_running(existing_pid):
+                raise BuildError(
+                    "已有 thesis 构建正在运行，当前构建已停止以避免并发删除 .latex-cache。\n"
+                    f"锁文件：{lock_path}\n"
+                    f"占用进程 PID：{existing_pid}\n"
+                    "请等待 VS Code/LaTeX Workshop 本轮构建结束后再重新构建。"
+                )
+            try:
+                lock_path.unlink()
+            except OSError as exc:
+                raise BuildError(
+                    f"构建锁文件已存在且无法清理：{lock_path}\n"
+                    "请确认没有正在运行的 LaTeX 构建进程后重试。"
+                ) from exc
+            continue
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump(lock_payload, handle, ensure_ascii=False)
+        try:
+            yield
+        finally:
+            try:
+                lock_path.unlink()
+            except FileNotFoundError:
+                pass
+        return
+
+
+def remove_cache_dir(cache_dir: Path) -> None:
+    if not cache_dir.exists():
+        return
+    try:
+        shutil.rmtree(cache_dir)
+    except PermissionError as exc:
+        raise BuildError(
+            f"无法清理缓存目录，文件正在被占用：{cache_dir}\n"
+            "常见原因是 VS Code/LaTeX Workshop 仍有上一轮 xelatex/biber/dvipdfmx 构建未结束，"
+            "或用户连续触发了多次构建。请等待当前构建结束后重试。"
+        ) from exc
 
 
 def configure_windows_stdio_utf8() -> None:
@@ -212,9 +299,9 @@ def run_best_effort(
         args,
         cwd=cwd,
         env=env,
-        text=True,
         capture_output=True,
         check=False,
+        **SUBPROCESS_TEXT_KWARGS,
     )
 
 
@@ -231,8 +318,7 @@ def build_project(project_dir: Path, tex_file: str) -> Path:
     tex_path = resolve_tex_file(project_dir, tex_file)
     tex_stem = tex_path.stem
     cache_dir = project_dir / CACHE_DIRNAME
-    if cache_dir.exists():
-        shutil.rmtree(cache_dir)
+    remove_cache_dir(cache_dir)
     cache_dir.mkdir(parents=True, exist_ok=True)
     ensure_cache_subdir(cache_dir, "extraTex")
 
@@ -250,7 +336,7 @@ def build_project(project_dir: Path, tex_file: str) -> Path:
         return output_pdf
 
     tex_env = os.environ.copy()
-    tex_roots = [PACKAGE_DIR]
+    tex_roots = [cache_dir, PACKAGE_DIR]
     if FONTS_PACKAGE_DIR.exists():
         tex_roots.append(FONTS_PACKAGE_DIR)
     tex_env["TEXINPUTS"] = build_texinputs(tex_roots, tex_env.get("TEXINPUTS", ""))
@@ -260,6 +346,7 @@ def build_project(project_dir: Path, tex_file: str) -> Path:
         "-interaction=nonstopmode",
         "-file-line-error",
         "-synctex=1",
+        "-recorder",
         f"-output-directory={cache_dir}",
         tex_path.name,
     ]
@@ -321,8 +408,7 @@ def clean_project(project_dir: Path, tex_file: str, remove_pdf: bool) -> None:
     tex_stem = tex_path.stem
     clean_root_artifacts(project_dir, tex_stem)
     cache_dir = project_dir / CACHE_DIRNAME
-    if cache_dir.exists():
-        shutil.rmtree(cache_dir)
+    remove_cache_dir(cache_dir)
     if remove_pdf:
         pdf_path = project_dir / f"{tex_stem}.pdf"
         if pdf_path.exists():
@@ -337,7 +423,7 @@ def rasterize_pdf(pdf_path: Path, out_dir: Path, prefix: str, dpi: int) -> list[
         [resolve_executable("pdftoppm"), "-r", str(dpi), "-png", str(pdf_path), str(target)],
         check=True,
         capture_output=True,
-        text=True,
+        **SUBPROCESS_TEXT_KWARGS,
     )
     return sorted(out_dir.glob(f"{prefix}-*.png"))
 
@@ -458,17 +544,20 @@ def main() -> None:
     project_dir = resolve_project_dir(getattr(args, "project_dir", None))
 
     if args.command == "build":
-        build_project(project_dir, args.tex_file)
+        with project_build_lock(project_dir):
+            build_project(project_dir, args.tex_file)
         return
 
     if args.command == "clean":
-        clean_project(project_dir, args.tex_file, args.remove_pdf)
+        with project_build_lock(project_dir):
+            clean_project(project_dir, args.tex_file, args.remove_pdf)
         return
 
     if args.command == "compare":
         project_pdf = project_dir / Path(args.tex_file).with_suffix(".pdf").name
         if args.build_first or not project_pdf.exists():
-            project_pdf = build_project(project_dir, args.tex_file)
+            with project_build_lock(project_dir):
+                project_pdf = build_project(project_dir, args.tex_file)
         result = compare_pdfs(
             project_pdf=project_pdf,
             baseline_pdf=args.baseline_pdf.expanduser().resolve(),
