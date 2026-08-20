@@ -134,9 +134,9 @@ AI 负责格式对齐、参考文献管理、章节重构、中英双语内容�
 
 | 模板 | 状态 | 标准包 | Overleaf 包 |
 |------|------|--------|-------------|
-| [青年 C](projects/NSFC_Young/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
-| [面上](projects/NSFC_General/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
-| [地区](projects/NSFC_Local/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
+| [青年 C](projects/NSFC_Young/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_Young-v4.0.20.zip)（2.24 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_Young-Overleaf-v4.0.20.zip)（7.85 MB） |
+| [面上](projects/NSFC_General/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_General-v4.0.20.zip)（0.96 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_General-Overleaf-v4.0.20.zip)（7.22 MB） |
+| [地区](projects/NSFC_Local/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_Local-v4.0.20.zip)（1.30 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/NSFC_Local-Overleaf-v4.0.20.zip)（7.90 MB） |
 
 ### 广东省自然科学基金模板
 
@@ -153,8 +153,8 @@ AI 负责格式对齐、参考文献管理、章节重构、中英双语内容�
 
 | 模板 | 状态 | 标准包 | Overleaf 包 |
 |------|------|--------|-------------|
-| [paper-coverletter-01](projects/paper-coverletter-01/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
-| [paper-sci-01](projects/paper-sci-01/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
+| [paper-coverletter-01](projects/paper-coverletter-01/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/paper-coverletter-01-v4.0.20.zip)（0.30 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/paper-coverletter-01-Overleaf-v4.0.20.zip)（0.01 MB） |
+| [paper-sci-01](projects/paper-sci-01/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/paper-sci-01-v4.0.20.zip)（0.38 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/paper-sci-01-Overleaf-v4.0.20.zip)（0.02 MB） |
 
 ### 学位论文 / 博士后模板
 
@@ -163,13 +163,13 @@ AI 负责格式对齐、参考文献管理、章节重构、中英双语内容�
 
 | 模板 | 院校 | 类型 | 标准包 | Overleaf 包 |
 |------|------|------|--------|-------------|
-| [thesis-ahnu-master](projects/thesis-ahnu-master/) | 安徽师范大学 | 硕士 | 暂未发布 | 暂未发布 |
-| [thesis-just-bachelor](projects/thesis-just-bachelor/) | 江苏科技大学 | 学士 | 暂未发布 | 暂未发布 |
-| [thesis-nju-master](projects/thesis-nju-master/) | 南京大学 | 硕士 | 暂未发布 | 暂未发布 |
-| [thesis-smu-master](projects/thesis-smu-master/) | 南方医科大学 | 硕士 | 暂未发布 | 暂未发布 |
-| [thesis-smu-postdoc](projects/thesis-smu-postdoc/) | 南方医科大学 | 博士后 | 暂未发布 | 暂未发布 |
-| [thesis-sysu-doctor](projects/thesis-sysu-doctor/) | 中山大学 | 博士 | 暂未发布 | 暂未发布 |
-| [thesis-ucas-doctor](projects/thesis-ucas-doctor/) | 中国科学院大学 | 博士 | 暂未发布 | 暂未发布 |
+| [thesis-ahnu-master](projects/thesis-ahnu-master/) | 安徽师范大学 | 硕士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-ahnu-master-v4.0.20.zip)（0.34 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-ahnu-master-Overleaf-v4.0.20.zip)（0.05 MB） |
+| [thesis-just-bachelor](projects/thesis-just-bachelor/) | 江苏科技大学 | 学士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-just-bachelor-v4.0.20.zip)（1.40 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-just-bachelor-Overleaf-v4.0.20.zip)（0.58 MB） |
+| [thesis-nju-master](projects/thesis-nju-master/) | 南京大学 | 硕士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-nju-master-v4.0.20.zip)（1.90 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-nju-master-Overleaf-v4.0.20.zip)（1.24 MB） |
+| [thesis-smu-master](projects/thesis-smu-master/) | 南方医科大学 | 硕士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-smu-master-v4.0.20.zip)（0.54 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-smu-master-Overleaf-v4.0.20.zip)（0.18 MB） |
+| [thesis-smu-postdoc](projects/thesis-smu-postdoc/) | 南方医科大学 | 博士后 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-smu-postdoc-v4.0.20.zip)（0.41 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-smu-postdoc-Overleaf-v4.0.20.zip)（0.08 MB） |
+| [thesis-sysu-doctor](projects/thesis-sysu-doctor/) | 中山大学 | 博士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-sysu-doctor-v4.0.20.zip)（0.55 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-sysu-doctor-Overleaf-v4.0.20.zip)（0.63 MB） |
+| [thesis-ucas-doctor](projects/thesis-ucas-doctor/) | 中国科学院大学 | 博士 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-ucas-doctor-v4.0.20.zip)（0.41 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/thesis-ucas-doctor-Overleaf-v4.0.20.zip)（0.53 MB） |
 
 ### 简历模板
 
@@ -177,7 +177,7 @@ AI 负责格式对齐、参考文献管理、章节重构、中英双语内容�
 
 | 模板 | 状态 | 标准包 | Overleaf 包 |
 |------|------|--------|-------------|
-| [cv-01](projects/cv-01/) | 🛠️ 等待发布 | 暂未发布 | 暂未发布 |
+| [cv-01](projects/cv-01/) | ✅ 已发布 | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/cv-01-v4.0.20.zip)（1.99 MB） | [下载](https://github.com/huangwb8/ChineseResearchLaTeX/releases/download/v4.0.20/cv-01-Overleaf-v4.0.20.zip)（38.6 MB） |
 <!-- TEMPLATE-LIST:END -->
 
 ---
